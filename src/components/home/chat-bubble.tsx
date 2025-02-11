@@ -8,11 +8,20 @@ import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
 import ReactPlayer from "react-player";
 import ChatAvatarActions from "./chat-avatar-actions";
 import { Bot } from "lucide-react";
+import { GenericId } from "convex/values";
 
+type User = {
+	_id: GenericId<"users">; // Use `GenericId<"users">` instead of `Id<"users">`
+	name?: string;
+	email: string;
+	image: string;
+	tokenIdentifier: string;
+	isOnline: boolean;
+  };
 
 type ChatBubbleProps = {
 	message: IMessage;
-	me: any;
+	me: User;
 	previousMessage?: IMessage;
 }
 

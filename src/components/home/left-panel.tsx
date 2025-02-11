@@ -8,15 +8,19 @@ import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@c
 import UserListDialog from "./user-list-dialog";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
+import { GenericId } from "convex/values";
 import { useEffect } from "react";
 import { useConversationStore } from "@/store/chat-store";
 
 const LeftPanel = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const conversations = useQuery(
-    api.conversations.getMyConversations,
-    isAuthenticated ? undefined : "skip"
-  );
+  const conversations = useQuery(api.conversations.getMyConversations, isAuthenticated ? undefined : "skip")?.map((conv) => ({
+    ...conv,
+    lastMessage: conv.lastMessage ? {
+      ...conv.lastMessage,
+      sender: conv.lastMessage.sender as GenericId<"users">, // Cast to `Id<"users">`
+    } : undefined,
+  }));
 
   const { selectedConversation, setSelectedConversation } = useConversationStore();
 

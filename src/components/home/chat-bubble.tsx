@@ -8,18 +8,11 @@ import { Dialog, DialogContent, DialogDescription } from "../ui/dialog";
 import ReactPlayer from "react-player";
 import ChatAvatarActions from "./chat-avatar-actions";
 import { Bot } from "lucide-react";
-import { Id } from "../../../convex/_generated/dataModel";
 
-type User = {
-	_id: Id<"users">; // Use the correct type for Convex document IDs
-	name: string;
-	isOnline: boolean;
-	image?: string;
-};
 
 type ChatBubbleProps = {
 	message: IMessage;
-	me: User;
+	me: any;
 	previousMessage?: IMessage;
 }
 

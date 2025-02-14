@@ -18,7 +18,7 @@ const LeftPanel = () => {
     ...conv,
     lastMessage: conv.lastMessage ? {
       ...conv.lastMessage,
-      sender: conv.lastMessage.sender as GenericId<"users">, // Cast to `Id<"users">`
+      sender: conv.lastMessage.sender as GenericId<"users">,
     } : undefined,
   }));
 
@@ -38,10 +38,10 @@ const LeftPanel = () => {
   if (isLoading) return null;
 
   return (
-    <div className="w-1/4 border-gray-600 border-r">
+    <div className={`w-full md:w-1/4 border-gray-600 border-r min-w-[280px] h-full ${selectedConversation ? 'hidden md:block' : 'block'}`}>
       <div className="sticky top-0 bg-left-panel z-10">
         {/* Header */}
-        <div className="flex justify-between bg-gray-primary p-3 items-center">
+        <div className="flex flex-wrap justify-between bg-gray-primary p-2 md:p-3 items-center gap-2">
           <UserButton />
           <SignedIn>
             <SignOutButton />
@@ -51,23 +51,23 @@ const LeftPanel = () => {
             <SignInButton />
           </SignedOut>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             {isAuthenticated && <UserListDialog />}
             <ThemeSwitch />
             <LogOut size={20} className="cursor-pointer" />
           </div>
         </div>
-        <div className="p-3 flex items-center">
+        <div className="p-2 md:p-3 flex items-center">
           {/* Search */}
-          <div className="relative h-10 mx-3 flex-1">
+          <div className="relative h-8 md:h-10 mx-2 md:mx-3 flex-1">
             <Search
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 z-10"
+              className="absolute left-2 md:left-3 top-1/2 transform -translate-y-1/2 text-gray-500 z-10"
               size={18}
             />
             <Input
               type="text"
               placeholder="Search or start a new chat"
-              className="pl-10 py-2 text-sm w-full rounded shadow-sm bg-gray-primary focus-visible:ring-transparent"
+              className="pl-8 md:pl-10 py-1 md:py-2 text-xs md:text-sm w-full rounded shadow-sm bg-gray-primary focus-visible:ring-transparent"
             />
           </div>
           <ListFilter className="cursor-pointer" />
@@ -75,17 +75,17 @@ const LeftPanel = () => {
       </div>
 
       {/* Chat List */}
-      <div className="my-3 flex flex-col gap-0 max-h-[80%] overflow-auto">
+      <div className="my-2 md:my-3 flex flex-col gap-0 max-h-[calc(100vh-160px)] overflow-auto">
         {conversations?.map((conversation) => (
           <Conversation key={conversation._id} conversation={conversation} />
         ))}
 
         {conversations?.length === 0 && (
           <>
-            <p className="text-center text-gray-500 text-sm mt-3">
+            <p className="text-center text-gray-500 text-xs md:text-sm mt-2 md:mt-3">
               No conversations yet
             </p>
-            <p className="text-center text-gray-500 text-sm mt-3">
+            <p className="text-center text-gray-500 text-xs md:text-sm mt-2 md:mt-3">
               We understand you are an introvert, but you have got to start somewhere
               😊
             </p>

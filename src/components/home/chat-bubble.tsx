@@ -25,8 +25,7 @@ type ChatBubbleProps = {
 	previousMessage?: IMessage;
 }
 
-const ChatBubble = ({me,message,previousMessage}:ChatBubbleProps) => {
-
+const ChatBubble = ({ me, message, previousMessage }: ChatBubbleProps) => {
 	const date = new Date(message._creationTime);
 	const hour = date.getHours().toString().padStart(2, "0");
 	const minute = date.getMinutes().toString().padStart(2, "0");
@@ -57,18 +56,12 @@ const ChatBubble = ({me,message,previousMessage}:ChatBubbleProps) => {
 		return (
 			<>
 				<DateIndicator message={message} previousMessage={previousMessage} />
-				<div className='flex gap-1 w-2/3'>
-					<ChatBubbleAvatar isGroup={isGroup} isMember={isMember} message={message}
-					fromAI={fromAI}
-					 />
-					<div className={`flex flex-col z-20 max-w-fit px-2 pt-1 rounded-md shadow-md relative ${bgClass}`}>
+				<div className='flex gap-2 md:gap-3 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[60%]'>
+					<ChatBubbleAvatar isGroup={isGroup} isMember={isMember} message={message} fromAI={fromAI} />
+					<div className={`flex flex-col z-20 max-w-full px-3 py-2 rounded-md shadow-md relative ${bgClass}`}>
 						{!fromAI && <OtherMessageIndicator />}
-						{<ChatAvatarActions 
-						    message={message}
-							me={me}
-						/>}
+						<ChatAvatarActions message={message} me={me} />
 						{fromAI && <Bot size={16} className='absolute bottom-[2px] left-2' />}
-						{/* {<ChatAvatarActions message={message} me={me} />} */}
 						{renderMessageContent()}
 						{open && <ImageDialog src={message.content} open={open} onClose={() => setOpen(false)} />}
 						<MessageTime time={time} fromMe={fromMe} />
@@ -81,9 +74,8 @@ const ChatBubble = ({me,message,previousMessage}:ChatBubbleProps) => {
 	return (
 		<>
 			<DateIndicator message={message} previousMessage={previousMessage} />
-
-			<div className='flex gap-1 w-2/3 ml-auto'>
-				<div className={`flex  z-20 max-w-fit px-2 pt-1 rounded-md shadow-md ml-auto relative ${bgClass}`}>
+			<div className='flex gap-2 md:gap-3 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[60%] ml-auto'>
+				<div className={`flex z-20 max-w-full px-3 py-2 rounded-md shadow-md ml-auto relative ${bgClass}`}>
 					<SelfMessageIndicator />
 					{renderMessageContent()}
 					{open && <ImageDialog src={message.content} open={open} onClose={() => setOpen(false)} />}
@@ -93,7 +85,9 @@ const ChatBubble = ({me,message,previousMessage}:ChatBubbleProps) => {
 		</>
 	);
 };
+
 export default ChatBubble;
+
 
 const VideoMessage = ({ message }: { message: IMessage }) => {
 	return <ReactPlayer url={message.content} width='250px' height='250px' controls={true} light={true} />;
